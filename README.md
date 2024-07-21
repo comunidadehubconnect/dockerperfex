@@ -195,20 +195,24 @@ services:
       - MYSQL_ROOT_PASSWORD=Mfcd62!!Mfcd62!!
       - TZ=America/Sao_Paulo
     networks:
-      - network_public
-    #ports:
-    #  - 3306:3306
+      - ecosystem_network
     volumes:
       - mysql_data:/var/lib/mysql
     deploy:
       placement:
         constraints:
           - node.role == manager
-          #- node.hostname == worker1
       resources:
         limits:
           cpus: '1'
           memory: 1024M
+      replicas: 1
+      update_config:
+        delay: 10s
+        parallelism: 1
+      rollback_config:
+        delay: 10s
+        parallelism: 1
     command:
       [
         "--character-set-server=utf8mb4",
@@ -224,9 +228,9 @@ volumes:
     name: mysql_data
 
 networks:
-  network_public:
+  ecosystem_network:
     external: true
-    name: network_public
+    name: ecosystem_network
 ```
 
 Depois clique em DEPLOY
@@ -264,8 +268,6 @@ services:
       - perfex_data:/var/www/html/
     environment:
       - MYSQL_ROOT_PASSWORD=Mfcd62!!Mfcd62!!
-    ports:
-      - 888:80
     deploy:
       mode: replicated
       replicas: 1
@@ -278,19 +280,19 @@ services:
           memory: 2048M
       labels:
         - traefik.enable=true
-        - traefik.http.routers.perfexcrm.rule=Host(`perfexcrm.masterbot.app.br`)
+        - traefik.http.routers.perfexcrm.rule=Host(`crm.seudominio.com.br`)
         - traefik.http.services.perfexcrm.loadbalancer.server.port=80
         - traefik.http.routers.perfexcrm.service=perfexcrm
         - traefik.http.routers.perfexcrm.tls.certresolver=letsencryptresolver
         - traefik.http.routers.perfexcrm.entrypoints=websecure
         - traefik.http.routers.perfexcrm.tls=true
     networks:
-      - network_public
-      
+      - ecosystem_network
+
 networks:
-  network_public:
+  ecosystem_network:
     external: true
-    name: network_public
+    name: ecosystem_network
 
 volumes:
   perfex_data:

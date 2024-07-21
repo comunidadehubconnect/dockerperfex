@@ -233,11 +233,15 @@ Depois clique em DEPLOY
 
 ![image](https://github.com/cwmkt/dockerquepasa/assets/91642837/bdc62781-993a-4d31-b8cd-5cd6466900f5)
 
-Acesse portainer, vá até contaneir MYSQL, crie banco de dados
+Acessar o conteiner do Mysql e criar um banco de dados:
 
-![image](https://github.com/cwmkt/woofedcrm/assets/91642837/503bf33f-ff42-4fe5-9a8f-a98e2d80d6e4)
+```bash
+mysql -u root -p
+```
 
-![image](https://github.com/cwmkt/woofedcrm/assets/91642837/67eb98c2-f7e7-4f27-ae9d-1befc672edcf)
+```bash
+Mfcd62!!Mfcd62!!
+```
 
 ```bash
 CREATE DATABASE perfexdb;
